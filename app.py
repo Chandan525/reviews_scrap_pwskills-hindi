@@ -72,6 +72,12 @@ def index():
                           "Comment": custComment}
                 reviews.append(mydict)
             logging.info("log my final result {}".format(reviews))
+
+            client = pymongo.MongoClient("mongodb+srv://cg3164:pwskills@cluster0.njibhrv.mongodb.net/?retryWrites=true&w=majority")
+            db = client['review_scrap']
+            review_col = db['review_scrap_data']
+            review_col.insert_many(reviews)   
+
             return render_template('result.html', reviews=reviews[0:(len(reviews)-1)])
         except Exception as e:
             logging.info(e)
